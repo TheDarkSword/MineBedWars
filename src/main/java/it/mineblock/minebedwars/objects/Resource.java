@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -127,5 +128,24 @@ public class Resource {
 
             tasks.add(Bukkit.getScheduler().runTaskTimer(Main.plugin, () -> world.dropItem(location, item), 0L, delay));
         }
+    }
+
+    @Override
+    public String toString() {
+        return "{Id: " +
+                id +
+                ", Resources: " +
+                Arrays.toString(resources) +
+                ", Location: [world: " +
+                location.getWorld().getName() +
+                ", x: " +
+                location.getX() +
+                ", y: " +
+                location.getY() +
+                ", z: " +
+                location.getZ() +
+                "], Tier: " +
+                tier +
+                "}";
     }
 }

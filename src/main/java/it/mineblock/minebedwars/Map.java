@@ -94,8 +94,20 @@ public class Map {
         return teams;
     }
 
+    public ArrayList<Bed> getBeds() {
+        return beds;
+    }
+
+    public ArrayList<Resource> getResources() {
+        return resources;
+    }
+
     public void addTeam(Team team) {
         teams.add(team);
+    }
+
+    public void setTeam(Team team, int index) {
+        teams.add(index, team);
     }
 
     public void addBed(Bed bed) {
@@ -132,13 +144,21 @@ public class Map {
                     map.getFloat ("teams." + section + ".spawn.pitch")
             ));
 
-            team.setBed(new Bed(new Location(
+            Bed bed = new Bed(new Location(
                     world,
-                    map.getDouble("teams." + section + ".bed.x"),
-                    map.getDouble("teams." + section + ".bed.y"),
-                    map.getDouble("teams." + section + ".bed.z")
-            )));
+                    map.getDouble("teams." + section + ".bed.b1.x"),
+                    map.getDouble("teams." + section + ".bed.b1.y"),
+                    map.getDouble("teams." + section + ".bed.b1.z")
+            ), new Location(
+                    world,
+                    map.getDouble("teams." + section + ".bed.b2.x"),
+                    map.getDouble("teams." + section + ".bed.b2.y"),
+                    map.getDouble("teams." + section + ".bed.b2.z")
+            ));
 
+            team.setBed(bed);
+
+            Main.gameHandler.getMap().addBed(bed);
             Main.gameHandler.getMap().addTeam(team);
         }
 
@@ -189,9 +209,13 @@ public class Map {
             map.set("teams." + team.getName().name() + ".spawn.yaw", team.getSpawn().getYaw());
             map.set("teams." + team.getName().name() + ".spawn.pitch", team.getSpawn().getPitch());
 
-            map.set("teams." + team.getName().name() + ".bed.x", team.getSpawn().getX());
-            map.set("teams." + team.getName().name() + ".bed.y", team.getSpawn().getY());
-            map.set("teams." + team.getName().name() + ".bed.z", team.getSpawn().getZ());
+            map.set("teams." + team.getName().name() + ".bed.b1.x", team.getBed().getLocation().getX());
+            map.set("teams." + team.getName().name() + ".bed.b1.y", team.getBed().getLocation().getY());
+            map.set("teams." + team.getName().name() + ".bed.b1.z", team.getBed().getLocation().getZ());
+
+            map.set("teams." + team.getName().name() + ".bed.b2.x", team.getBed().getLocation2().getX());
+            map.set("teams." + team.getName().name() + ".bed.b2.y", team.getBed().getLocation2().getY());
+            map.set("teams." + team.getName().name() + ".bed.b2.z", team.getBed().getLocation2().getZ());
         }
 
         for(Resource resource : resources) {

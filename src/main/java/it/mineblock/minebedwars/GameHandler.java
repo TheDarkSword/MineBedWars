@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * along with MineBedWars.  If not, see <http://www.gnu.org/licenses/>.
  */
 public class GameHandler {
-    private Map map;
+    private Map map = new Map();
     private GamePhases phase;
 
     private ArrayList<Player> shoutTimeout = new ArrayList<>();
@@ -66,17 +66,29 @@ public class GameHandler {
         }
     }
 
-    private void waiting() {}
+    private void waiting() {
+        for(Resource resource : map.getResources()) {
+            resource.spawn();
+        }
+    }
 
-    private void starting() {}
+    private void starting() {
 
-    private void running() {}
+    }
 
-    private void ending() {}
+    private void running() {
 
-    private void rebooting() {}
+    }
+
+    private void ending() {
+
+    }
+
+    private void rebooting() {
+
+    }
 
     private void configuring() {
-        map = new Map();
+
     }
 }

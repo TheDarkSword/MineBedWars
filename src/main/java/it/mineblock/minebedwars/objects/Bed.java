@@ -60,6 +60,11 @@ public class Bed {
         Chat.getLogger("Bed error! Missing second block.", "warning");
     }
 
+    public Bed(Location loc, Location loc2) {
+        this.loc = loc;
+        this.loc2 = loc2;
+    }
+
     public void setTeam(Team team) {
         this.team = team;
     }
@@ -74,5 +79,26 @@ public class Bed {
 
     public Boolean isThis(Location location) {
         return loc.equals(location) || loc2.equals(location);
+    }
+
+    @Override
+    public String toString() {
+        return "{Block1: [wolrd:" +
+                loc.getWorld().getName() +
+                ", x: " +
+                loc.getX() +
+                ", y: " +
+                loc.getY() +
+                ", z: " +
+                loc.getZ() +
+                "], Block2: [world: " +
+                loc2.getWorld().getName() +
+                ", x: " +
+                loc2.getX() +
+                ", y: " +
+                loc2.getY() +
+                ", z: " +
+                loc2.getZ() +
+                "]}";
     }
 }

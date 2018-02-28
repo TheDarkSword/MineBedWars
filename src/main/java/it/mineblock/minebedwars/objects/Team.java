@@ -57,7 +57,26 @@ public class Team {
         return spawn;
     }
 
+    public Bed getBed() {
+        return bed;
+    }
+
     public int getSize() {
         return members.size();
+    }
+
+    @Override
+    public String toString() {
+        return "{Name: " +
+                name.name() +
+                ", Spawn: [world: " +
+                spawn.getWorld().getName() +
+                ", x: " +
+                spawn.getX() +
+                ", y: " +
+                spawn.getY() +
+                ", z: " +
+                spawn.getZ() +
+                "]}";
     }
 }

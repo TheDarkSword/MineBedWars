@@ -66,9 +66,7 @@ public class Main extends JavaPlugin {
     }
 
     private void mapLoader() {
-        File map = new File(getDataFolder(), MAP);
-
-        if(configuration.configExists(map)) {
+        if(configuration.configExists(new File(getDataFolder(), MAP))) {
             gameHandler.getMap().loadFromConfig();
             gameHandler.setPhase(GamePhases.WAITING);
         } else {
