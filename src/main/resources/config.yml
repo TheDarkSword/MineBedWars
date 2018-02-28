@@ -1,0 +1,81 @@
+#########################################
+#                MBedWars               #
+#                                       #
+#               created by              #
+#             LoreSchaeffer             #
+#             TheDarkSword01            #
+#                                       #
+#                  for                  #
+#               MineBlock.it            #
+#########################################
+
+#Socket connection settings
+socket:
+  host: 127.0.0.1
+  port: 12980
+  #Change this to true if you want more detailed log
+  verbose: false
+
+shout-time: 20
+respawn-time: 5
+
+#Game settings
+game:
+  #Time to wait to play when the minimum amount of players is reached
+  time-to-start: 60
+  #Time to wait to play when the maximum amount of players is reached
+  time-to-start-full: 15
+  #Ore spawner settings
+  spawner:
+    tier-0:
+      iron:
+        delay: 1
+        amount: 4
+      gold:
+        delay: 8
+        amount: 1
+      diamond:
+        delay: 40
+        amount: 1
+      emerald:
+        delay: 90
+        amount: 1
+    tier-1:
+      iron:
+        delay: 1
+        amount: 6
+      gold:
+        delay: 10
+        amount: 2
+      diamond:
+        delay: 40
+        amount: 1
+      emerald:
+        delay: 90
+        amount: 1
+    tier-2:
+      iron:
+        delay: 1
+        amount: 8
+      gold:
+        delay: 10
+        amount: 3
+      diamond:
+        delay: 35
+        amount: 1
+      emerald:
+        delay: 90
+        amount: 1
+    tier-3:
+      iron:
+        delay: 1
+        amount: 10
+      gold:
+        delay: 10
+        amount: 4
+      diamond:
+        delay: 35
+        amount: 1
+      emerald:
+        delay: 90
+        amount: 1
