@@ -92,7 +92,6 @@ public class Create {
                         team.setBed(bed);
                         Main.gameHandler.getMap().setTeam(team, index);
                         Main.gameHandler.getMap().addBed(bed);
-                        break;
                     }
                 }
             }

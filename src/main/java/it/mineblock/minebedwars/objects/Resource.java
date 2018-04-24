@@ -1,5 +1,6 @@
 package it.mineblock.minebedwars.objects;
 
+import it.mineblock.mbcore.Chat;
 import it.mineblock.minebedwars.Main;
 import it.mineblock.minebedwars.enums.Teams;
 import org.bukkit.Bukkit;
@@ -120,8 +121,9 @@ public class Resource {
     public void spawn() {
         short index = 0;
         for(String resource : resources) {
-            long delay = Main.config.getInt("game.tier-" + tier + "." + resource + ".delay");
-            int amount = Main.config.getInt("game.tier-" + tier + "." + resource + ".amount");
+            Chat.getLogger(resource, "info");
+            long delay = Main.config.getInt("game.spawner.tier-" + tier + "." + resource + ".delay") * 20;
+            int amount = Main.config.getInt("game.spawner.tier-" + tier + "." + resource + ".amount");
 
             ItemStack item = new ItemStack(materials[index], amount);
             World world = location.getWorld();

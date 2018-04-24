@@ -12,6 +12,7 @@ import org.bukkit.World;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -163,16 +164,16 @@ public class Map {
         }
 
         for(String section : map.getSection("resources").getKeys()) {
-            List<String> mList = map.getStringList("resources." + section + "materials");
+            List<String> mList = map.getStringList("resources." + section + ".materials");
             String[] materials = mList.toArray(new String[mList.size()]);
 
             Resource resource = new Resource(Integer.parseInt(section), materials);
 
             resource.setLocation(new Location(
                     Main.gameHandler.getMap().getWorld(),
-                    map.getDouble("resources." + section + "location.x"),
-                    map.getDouble("resources." + section + "location.y"),
-                    map.getDouble("resources." + section + "location.z")
+                    map.getDouble("resources." + section + ".location.x"),
+                    map.getDouble("resources." + section + ".location.y") + 0.5,
+                    map.getDouble("resources." + section + ".location.z")
             ));
 
             Main.gameHandler.getMap().addResource(resource);
