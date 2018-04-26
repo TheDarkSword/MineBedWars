@@ -1,13 +1,13 @@
 name: MineBedWars
 version: 1.0
 author: LoreSchaeffer && TheDarkSword01
-main: it.mineblock.minebedwars.Main
+main: it.mineblock.bedwars.Main
 description: Just another bedwars plugin
 depend: [MBCore]
 
 commands:
   mbw:
-    aliases: [minebedwars, mbedwars, mbwars]
+    aliases: [minebedwarsold, mbedwars, mbwars]
     descripiton: Main command of this plugin
   mbwreload:
     aliases: [mbwr]
