@@ -9,35 +9,42 @@ import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.ArrayList;
-
 public class Resource {
-    private ArrayList<BukkitTask> tasks = new ArrayList<>();
+    BukkitTask task;
     private int id;
-    private String[] resources;
-    private Material[] materials;
+    private String resource;
+    private Material material;
     private Location location;
     private int tier;
     private Teams team;
 
-    public Resource(int id, String[] resources) {
+    public Resource(int id, String resource) {
         this.id = id;
-        this.resources = resources;
+        this.resource = resource;
         this.tier = 0;
 
-        setMaterials();
-    }
-
-    public Resource(int id, String resource) {
-        this(id, new String[] {resource});
+        switch(resource) {
+            case "iron":
+                material = Material.IRON_INGOT;
+                break;
+            case "gold":
+                material = Material.GOLD_INGOT;
+                break;
+            case "diamond":
+                material = Material.DIAMOND;
+                break;
+            case "emerald":
+                material = Material.EMERALD;
+                break;
+        }
     }
 
     public int getId() {
         return id;
     }
 
-    public String[] getResources() {
-        return resources;
+    public String getResource() {
+        return resource;
     }
 
     public Location getLocation() {
@@ -48,42 +55,47 @@ public class Resource {
         return team;
     }
 
-    private void setMaterials() {
-        Material[] materials = new Material[2];
+    public void setLocation(Location location) {
+        this.location = location;
+    }
 
-        int index = 0;
-        for(String resource : resources) {
-            switch(resource) {
-                case "iron":
-                    materials[index] = Material.IRON_INGOT;
-                    break;
-                case "gold":
-                    materials[index] = Material.GOLD_INGOT;
-                    break;
-                case "diamond":
-                    materials[index] = Material.DIAMOND;
-                    break;
-                case "emerald":
-                    materials[index] = Material.EMERALD;
-                    break;
+    public void setTeam(String name) {
+        if(name.isEmpty()) {
+            this.team = null;
+        } else {
+            for (Teams team : Teams.values()) {
+                if (name.equalsIgnoreCase(team.name())) {
+                    this.team = team;
+                    return;
+                }
             }
+            this.team = null;
+            //TODO Change behaviour based on situation
+        }
+    }
+
+    private boolean upgrade() {
+        if(tier++ > (Main.config.getSection("resources").getKeys().size() - 1)) {
+            return false;
         }
 
-        this.materials = materials;
+        tier++;
+        if(task != null) {
+            task.cancel();
+            spawn();
+        }
+        return true;
     }
 
     public void spawn() {
-        short index = 0;
-        for(String resource : resources) {
-            long delay = Main.config.getInt("game.spawner.tier-" + tier + "." + resource + ".delay") * 20;
-            int amount = Main.config.getInt("game.spawner.tier-" + tier + "." + resource + ".amount");
+        long delay = Main.config.getLong("game.resources.tier-" + tier + "." + resource + ".delay") * 20;
+        int amount = Main.config.getInt("game.resources.tier-" + tier + "." + resource + ".amount");
+        ItemStack item = new ItemStack(material, amount);
+        World world = location.getWorld();
 
-            ItemStack item = new ItemStack(materials[index], amount);
-            World world = location.getWorld();
-
-            tasks.add(Bukkit.getScheduler().runTaskTimer(Main.plugin, () -> {
-                world.dropItem(location, item);
-            }, 0L, delay));
-        }
+        task = Bukkit.getScheduler().runTaskTimer(Main.plugin, () -> {
+            world.dropItem(location, item);
+            //TODO Change behaviour
+        }, 0L, delay);
     }
 }

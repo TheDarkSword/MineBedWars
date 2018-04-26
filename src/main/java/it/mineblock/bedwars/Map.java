@@ -3,12 +3,14 @@ package it.mineblock.bedwars;
 import it.mineblock.bedwars.enums.GamePhases;
 import it.mineblock.bedwars.objects.*;
 import it.mineblock.mbcore.spigot.config.Configuration;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Map {
     private Configuration config;
@@ -25,6 +27,7 @@ public class Map {
         File map = new File(Main.plugin.getDataFolder(), Main.MAP);
 
         if(Main.configuration.configExists(map)) {
+            config = Main.configuration.loadConfig(map);
             load();
         } else {
             try {
@@ -39,7 +42,68 @@ public class Map {
     }
 
     private void load() {
+        world = Bukkit.getWorld(config.getString("world"));
+        center = new Location(
+                world,
+                config.getDouble("center.x"),
+                config.getDouble("center.y"),
+                config.getDouble("center.z")
+        );
+        radius = config.getLong("radius");
+        minPlayers = config.getInt("min-players");
+        maxPlayers = config.getInt("max-players");
+        teamSize = config.getInt("team-size");
 
+        for(String section : config.getSection("teams").getKeys()) {
+            Team team = new Team(section);
+            team.setSpawn(new Location(
+                    world,
+                    config.getDouble("teams." + section + ".spawn.x"),
+                    config.getDouble("teams." + section + ".spawn.y"),
+                    config.getDouble("teams." + section + ".spawn.z"),
+                    config.getFloat("teams." + section + ".spawn.yaw"),
+                    config.getFloat ("teams." + section + ".spawn.pitch")
+            ));
+
+            team.setBed1(new Location(
+                    world,
+                    config.getDouble("teams." + section + ".bed.b1.x"),
+                    config.getDouble("teams." + section + ".bed.b1.y"),
+                    config.getDouble("teams." + section + ".bed.b1.z")));
+            team.setBed2(new Location(
+                    world,
+                    config.getDouble("teams." + section + ".bed.b2.x"),
+                    config.getDouble("teams." + section + ".bed.b2.y"),
+                    config.getDouble("teams." + section + ".bed.b2.z")));
+
+            teams.add(team);
+        }
+
+        for(String section : config.getSection("resources").getKeys()) {
+            String material = config.getString("resources." + section + ".material");
+            int id;
+
+            try {
+                id = Integer.parseInt(section);
+            } catch (NumberFormatException ignored) {
+                new NumberFormatException("This resource id must be an Integer, check your map config!").printStackTrace();
+                Main.plugin.onDisable();
+                return;
+            }
+
+            Resource resource = new Resource(id, material);
+            resource.setLocation(new Location(
+                    world,
+                    config.getDouble("resources." + section + ".location.x"),
+                    config.getDouble("resources." + section + ".location.y") + 0.5,
+                    config.getDouble("resources." + section + ".location.z")
+            ));
+            resource.setTeam("resources." + section + ".team");
+
+            resources.add(resource);
+        }
+
+        Main.gameHandler.setPhase(GamePhases.WAITING);
     }
 
     public void save() {
@@ -69,7 +133,7 @@ public class Map {
         }
 
         for(Resource resource : resources) {
-            config.set("resources." + resource.getId() + ".materials", resource.getResources());
+            config.set("resources." + resource.getId() + ".material", resource.getResource());
 
             config.set("resources." + resource.getId() + ".location.x", resource.getLocation().getX());
             config.set("resources." + resource.getId() + ".location.y", resource.getLocation().getY());
@@ -79,5 +143,6 @@ public class Map {
         }
 
         Main.configuration.saveConfig(config, new File(Main.plugin.getDataFolder(), Main.MAP));
+        Main.gameHandler.setPhase(GamePhases.WAITING);
     }
 }

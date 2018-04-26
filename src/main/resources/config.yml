@@ -26,7 +26,7 @@ game:
   #Time to wait to play when the maximum amount of players is reached
   time-to-start-full: 15
   #Ore spawner settings
-  spawner:
+  resources:
     tier-0:
       iron:
         delay: 1

@@ -1,6 +1,8 @@
 package it.mineblock.bedwars;
 
 import it.mineblock.bedwars.enums.GamePhases;
+import it.mineblock.mbcore.spigot.Chat;
+import org.bukkit.Bukkit;
 
 public class GameHandler {
     Map map = new Map();
@@ -48,7 +50,7 @@ public class GameHandler {
     }
 
     private void booting() {
-
+        map.init();
     }
 
     private void waiting() {
@@ -72,6 +74,6 @@ public class GameHandler {
     }
 
     private void configuration() {
-
+        Bukkit.broadcastMessage(Chat.getTranslated("&eWelcome to &6MineBedwars &emap configuration system!"));
     }
 }

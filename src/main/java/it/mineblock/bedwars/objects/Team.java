@@ -1,6 +1,8 @@
 package it.mineblock.bedwars.objects;
 
+import it.mineblock.bedwars.Main;
 import it.mineblock.bedwars.enums.Teams;
+import it.mineblock.mbcore.spigot.Chat;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -17,6 +19,17 @@ public class Team {
         this.name = name;
     }
 
+    public Team(String name) {
+        for(Teams team : Teams.values()) {
+            if(name.equalsIgnoreCase(team.name())) {
+                this.name = team;
+                return;
+            }
+        }
+        new IllegalArgumentException("This team has an invalid name, check your map config!").printStackTrace();
+        Main.plugin.onDisable();
+    }
+
     public Teams getTeam() {
         return name;
     }
@@ -31,5 +44,17 @@ public class Team {
 
     public Location getBed2() {
         return bed2;
+    }
+
+    public void setSpawn(Location spawn) {
+        this.spawn = spawn;
+    }
+
+    public void setBed1(Location bed1) {
+        this.bed1 = bed1;
+    }
+
+    public void setBed2(Location bed2) {
+        this.bed2 = bed2;
     }
 }
