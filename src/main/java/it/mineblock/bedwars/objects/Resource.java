@@ -74,6 +74,10 @@ public class Resource {
         }
     }
 
+    public void setTeam(Teams team) {
+        this.team = team;
+    }
+
     private boolean upgrade() {
         if(tier++ > (Main.config.getSection("resources").getKeys().size() - 1)) {
             return false;

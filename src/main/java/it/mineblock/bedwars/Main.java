@@ -5,6 +5,8 @@ import it.mineblock.mbcore.spigot.config.Configuration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+
 public class Main extends JavaPlugin {
     static final String MAP = "map.yml";
 
@@ -15,16 +17,18 @@ public class Main extends JavaPlugin {
     public static Plugin plugin;
     public static Configuration config;
     public static Configuration messages;
-    public static GameHandler gameHandler = new GameHandler();
+    public static GameHandler gameHandler;
+    public static boolean debug = true;
 
     static MBConfig configuration = new MBConfig();
 
 
     public void onEnable() {
+        plugin = this;
 
-    }
+        config = configuration.autoloadConfig(plugin, PLUGIN, getResource(CONFIG), new File(getDataFolder(), CONFIG), CONFIG);
+        messages = configuration.autoloadSecondaryConfig(getDataFolder(), PLUGIN, getResource(MESSAGES), new File(getDataFolder(), MESSAGES), MESSAGES);
 
-    public void onDisable() {
-        
+        gameHandler = new GameHandler();
     }
 }

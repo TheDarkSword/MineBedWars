@@ -41,6 +41,18 @@ public class Map {
         }
     }
 
+    public void setWorld(World world) {
+        this.world = world;
+    }
+
+    public void addTeam(Team team) {
+        teams.add(team);
+    }
+
+    public void addResource(Resource resource) {
+        resources.add(resource);
+    }
+
     private void load() {
         world = Bukkit.getWorld(config.getString("world"));
         center = new Location(

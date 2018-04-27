@@ -2,8 +2,10 @@ package it.mineblock.bedwars.objects;
 
 import it.mineblock.bedwars.Main;
 import it.mineblock.bedwars.enums.Teams;
-import it.mineblock.mbcore.spigot.Chat;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -56,5 +58,38 @@ public class Team {
 
     public void setBed2(Location bed2) {
         this.bed2 = bed2;
+    }
+
+    public void setBeds(Location bed1) {
+        this.bed1 = bed1;
+
+        Block bed = bed1.getBlock();
+
+        Block rel = bed.getRelative(BlockFace.EAST);
+        if(rel.getType().equals(Material.BED_BLOCK)) {
+            bed2 = rel.getLocation();
+            return;
+        }
+
+        rel = bed.getRelative(BlockFace.SOUTH);
+        if(rel.getType().equals(Material.BED_BLOCK)) {
+            bed2 = rel.getLocation();
+            return;
+        }
+
+        rel = bed.getRelative(BlockFace.WEST);
+        if(rel.getType().equals(Material.BED_BLOCK)) {
+            bed2 = rel.getLocation();
+            return;
+        }
+
+        rel = bed.getRelative(BlockFace.NORTH);
+        if(rel.getType().equals(Material.BED_BLOCK)) {
+            bed2 = rel.getLocation();
+            return;
+        }
+
+        new Exception("Bed error! Second BED_BLOCK face not found!").printStackTrace();
+        Main.plugin.onDisable();
     }
 }
