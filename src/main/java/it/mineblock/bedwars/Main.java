@@ -1,6 +1,7 @@
 package it.mineblock.bedwars;
 
 import it.mineblock.bedwars.commands.Mbw;
+import it.mineblock.bedwars.listeners.OnPlayerLogin;
 import it.mineblock.bedwars.listeners.OnPreLogin;
 import it.mineblock.mbcore.spigot.MBConfig;
 import it.mineblock.mbcore.spigot.config.Configuration;
@@ -39,6 +40,7 @@ public class Main extends JavaPlugin {
 
     private void registerListeners() {
         getServer().getPluginManager().registerEvents(new OnPreLogin(), this);
+        getServer().getPluginManager().registerEvents(new OnPlayerLogin(), this);
     }
 
     private void registerCommands() {

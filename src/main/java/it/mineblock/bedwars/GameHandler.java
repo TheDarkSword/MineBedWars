@@ -5,8 +5,9 @@ import it.mineblock.mbcore.spigot.Chat;
 import org.bukkit.Bukkit;
 
 public class GameHandler {
-    Map map = new Map();
-    GamePhases phase;
+    public boolean isBroadcastWaiting = false;
+    private Map map = new Map();
+    private GamePhases phase;
 
     public GameHandler() {
         setPhase(GamePhases.BOOTING);
@@ -74,7 +75,11 @@ public class GameHandler {
     }
 
     private void configuration() {
-        Bukkit.broadcastMessage(Chat.getTranslated("&eWelcome to &6MineBedwars &emap configuration system!"));
-        Bukkit.broadcastMessage(Chat.getTranslated("&eTo start the creation of the map position yourself in the world you want to configure and enter the command &c/mbw create&e."));
+        if(Bukkit.getOnlinePlayers().size() != 0) {
+            Bukkit.broadcastMessage(Chat.getTranslated("&eWelcome to &6MineBedwars &emap configuration system!"));
+            Bukkit.broadcastMessage(Chat.getTranslated("&eTo start the creation of the map position yourself in the world you want to configure and enter the command &c/mbw create&e."));
+        } else {
+            isBroadcastWaiting = true;
+        }
     }
 }
