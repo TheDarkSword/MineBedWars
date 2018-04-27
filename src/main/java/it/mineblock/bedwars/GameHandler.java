@@ -75,5 +75,6 @@ public class GameHandler {
 
     private void configuration() {
         Bukkit.broadcastMessage(Chat.getTranslated("&eWelcome to &6MineBedwars &emap configuration system!"));
+        Bukkit.broadcastMessage(Chat.getTranslated("&eTo start the creation of the map position yourself in the world you want to configure and enter the command &c/mbw create&e."));
     }
 }

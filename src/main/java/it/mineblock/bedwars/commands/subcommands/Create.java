@@ -5,6 +5,7 @@ import it.mineblock.bedwars.enums.Teams;
 import it.mineblock.bedwars.objects.Resource;
 import it.mineblock.bedwars.objects.Team;
 import it.mineblock.mbcore.spigot.Chat;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -122,5 +123,9 @@ public class Create {
             }
         }
         /* Set resources */
+
+        Bukkit.broadcastMessage(Chat.getTranslated("&eOk, so the map is the world &c" + Main.gameHandler.getMap().getWorld().getName() +
+                "&e, you have &c" + Main.gameHandler.getMap().getTeams().size() + " &eteams and &c" + Main.gameHandler.getMap().getResources().size() + " &eresource spawners."));
+        Bukkit.broadcastMessage(Chat.getTranslated("&eNow i need to know the center of the map and the radius, position yourself in the center (Y doesn't matter) and enter the command &c/mbw setradius <radius>&e."));
     }
 }

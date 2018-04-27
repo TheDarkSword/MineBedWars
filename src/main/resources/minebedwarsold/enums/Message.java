@@ -1,13 +1,25 @@
-package it.mineblock.bedwars.enums;
+package minebedwarsold.enums;
 
-import it.mineblock.bedwars.Main;
-import it.mineblock.mbcore.spigot.Chat;
+import it.mineblock.mbcore.Chat;
 
-public enum Messages {
-    KICK_BOOTING("kick-booting"),
-    KICK_FULL("kick-full"),
-    KICK_RUNNING("kick-running"),
-
+/**
+ * Copyright © 2018 by Lorenzo Magni and Michele Giacalone
+ * This file is part of MineBedWars.
+ * <p>
+ * MineBedWars is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * <p>
+ * MineBedWars is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * <p>
+ * You should have received a copy of the GNU General Public License
+ * along with MineBedWars.  If not, see <http://www.gnu.org/licenses/>.
+ */
+public enum Message {
     NOT_PLAYER("not-player"),
     CLICK_TO_JOIN("click-to-join"),
     MAP_CONFIGURATION("map-configuration"),
@@ -48,27 +60,37 @@ public enum Messages {
     TEAM_NAME(""),
     NOT_NOW("");
 
-    private String message;
+    public String message;
+    private static final String ORIGIN = "messages.";
 
-    Messages(String message) {
-        this.message = "messages." + message;
+    Message(String message) {
+        this.message = message;
     }
 
     public String get() {
-        return Chat.getTranslated(Main.messages.getString(message));
+        return Chat.getTranslated(this.message);
+    }
+
+    /*public String get() { TODO reenable
+        return Chat.getTranslated(Main.msgConfig.getString(ORIGIN + message));
     }
 
     public String getReplaced(String target, String replacement) {
-        return Chat.getTranslated(Main.messages.getString(message).replace(target, replacement));
+        return Chat.getTranslated(Main.msgConfig.getString(ORIGIN + message).replace(target, replacement));
     }
 
     public String getReplaced(String[] target, String[] replacement) {
-        String msg = Main.messages.getString(message);
+        String msg = Main.msgConfig.getString(ORIGIN + message);
+
+        if (target.length != replacement.length) {
+            Chat.getLogger(Message.EXCEPTION.getReplaced("{exception}", "Target and Replacement must have the same length!"), "severe");
+            return msg;
+        }
 
         for (int i = 0; i < target.length; i++) {
             msg = msg.replace(target[i], replacement[i]);
         }
 
         return msg;
-    }
+    }*/
 }

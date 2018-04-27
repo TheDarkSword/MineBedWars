@@ -1,5 +1,7 @@
 package it.mineblock.bedwars;
 
+import it.mineblock.bedwars.commands.Mbw;
+import it.mineblock.bedwars.listeners.OnPreLogin;
 import it.mineblock.mbcore.spigot.MBConfig;
 import it.mineblock.mbcore.spigot.config.Configuration;
 import org.bukkit.plugin.Plugin;
@@ -30,5 +32,16 @@ public class Main extends JavaPlugin {
         messages = configuration.autoloadSecondaryConfig(getDataFolder(), PLUGIN, getResource(MESSAGES), new File(getDataFolder(), MESSAGES), MESSAGES);
 
         gameHandler = new GameHandler();
+
+        registerListeners();
+        registerCommands();
+    }
+
+    private void registerListeners() {
+        getServer().getPluginManager().registerEvents(new OnPreLogin(), this);
+    }
+
+    private void registerCommands() {
+        getCommand("mbw").setExecutor(new Mbw());
     }
 }

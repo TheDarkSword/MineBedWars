@@ -10,10 +10,10 @@ import org.bukkit.World;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Map {
     private Configuration config;
+    private Boolean configuring = null;
     private World world;
     private Location center;
     private Long radius;
@@ -27,6 +27,7 @@ public class Map {
         File map = new File(Main.plugin.getDataFolder(), Main.MAP);
 
         if(Main.configuration.configExists(map)) {
+            configuring = false;
             config = Main.configuration.loadConfig(map);
             load();
         } else {
@@ -41,8 +42,68 @@ public class Map {
         }
     }
 
+    public Boolean isConfiguring() {
+        return configuring;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public Location getCenter() {
+        return center;
+    }
+
+    public Long getRadius() {
+        return radius;
+    }
+
+    public Integer getMinPlayers() {
+        return minPlayers;
+    }
+
+    public Integer getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public Integer getTeamSize() {
+        return teamSize;
+    }
+
+    public ArrayList<Team> getTeams() {
+        return teams;
+    }
+
+    public ArrayList<Resource> getResources() {
+        return resources;
+    }
+
+    public void setConfiguring(Boolean configuring) {
+        this.configuring = configuring;
+    }
+
     public void setWorld(World world) {
         this.world = world;
+    }
+
+    public void setCenter(Location center) {
+        this.center = center;
+    }
+
+    public void setRadius(Long radius) {
+        this.radius = radius;
+    }
+
+    public void setMinPlayers(Integer minPlayers) {
+        this.minPlayers = minPlayers;
+    }
+
+    public void setMaxPlayers(Integer maxPlayers) {
+        this.maxPlayers = maxPlayers;
+    }
+
+    public void setTeamSize(Integer teamSize) {
+        this.teamSize = teamSize;
     }
 
     public void addTeam(Team team) {
