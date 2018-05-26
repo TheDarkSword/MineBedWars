@@ -68,7 +68,7 @@ public class Create {
             for(BlockState beacon : chunk.getTileEntities()) {
                 if(beacon instanceof Beacon) {
                     Location location = beacon.getLocation();
-                    beacon.setType(Material.AIR);
+                    beacon.getBlock().setType(Material.AIR);
                     Block block = location.subtract(0, 1, 0).getBlock();
                     Resource resource;
                     Resource resource2 = null;
